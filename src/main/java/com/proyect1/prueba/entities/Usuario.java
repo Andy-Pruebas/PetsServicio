@@ -1,60 +1,79 @@
 package com.proyect1.prueba.entities;
 
+import java.util.*;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuarios")
+@Table(name="usuario")
 public class Usuario {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_usu;
 	
-	private String nombres;
+	private String nombre_usu;
 	
-	private String correo;
+	private String correo_usu;
 	
-	private String contraseña;
+	private String password_usu;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name=("id_usuario"),referencedColumnName="id_usu")
+    private List<Mascota> mascota=new ArrayList<>();
 
-	public Long getId() {
-		return id;
+	public Long getId_usu() {
+		return id_usu;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getNombre_usu() {
+		return nombre_usu;
 	}
 
-	public String getNombres() {
-		return nombres;
+	public String getCorreo_usu() {
+		return correo_usu;
 	}
 
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
+	public String getPassword_usu() {
+		return password_usu;
 	}
 
-	public String getCorreo() {
-		return correo;
+	public List<Mascota> getMascota() {
+		return mascota;
 	}
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
+	public void setId_usu(Long id_usu) {
+		this.id_usu = id_usu;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public void setNombre_usu(String nombre_usu) {
+		this.nombre_usu = nombre_usu;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setCorreo_usu(String correo_usu) {
+		this.correo_usu = correo_usu;
+	}
+
+	public void setPassword_usu(String password_usu) {
+		this.password_usu = password_usu;
+	}
+
+	public void setMascota(List<Mascota> mascota) {
+		this.mascota = mascota;
 	}
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nombres=" + nombres + ", correo=" + correo + ", contraseña=" + contraseña + "]";
+		return "Usuario [id_usu=" + id_usu + ", nombre_usu=" + nombre_usu + ", correo_usu=" + correo_usu
+				+ ", password_usu=" + password_usu + ", mascota=" + mascota + "]";
 	}
 
 	
+		
 }

@@ -3,6 +3,7 @@ package com.proyect1.prueba.services;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.proyect1.prueba.entities.Mascota;
 import com.proyect1.prueba.repository.MascotaRepository;
 
 @Service
+@Transactional
 public class MascotaServiceImpl implements MascotaService{
 	
 	@Autowired

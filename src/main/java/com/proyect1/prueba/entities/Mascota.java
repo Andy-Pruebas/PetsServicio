@@ -21,7 +21,7 @@ public class Mascota {
 
 	private String foto;
 
-	private int id_usuario;
+	private Long id_usuario;
 
 	public Long getId() {
 		return id;
@@ -63,10 +63,19 @@ public class Mascota {
 		this.foto = foto;
 	}
 
+	public Long getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
 	@Override
 	public String toString() {
 		return "Mascota [id=" + id + ", nombre=" + nombre + ", raza=" + raza + ", edad=" + edad + ", foto=" + foto
-				+ "]";
+				+ ", id_usuario=" + id_usuario + "]";
 	}
-
+	
+	
 }

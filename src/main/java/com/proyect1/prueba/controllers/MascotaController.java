@@ -12,10 +12,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,6 @@ import com.proyect1.prueba.entities.Mascota;
 import com.proyect1.prueba.services.MascotaService;
 
 @RestController
-@RequestMapping("/api")
 public class MascotaController {
 	private static final Logger logger = LoggerFactory.getLogger(MascotaController.class);
 
@@ -62,13 +61,15 @@ public class MascotaController {
 
 	@PostMapping("/mascotas")
 	public Mascota crear(@RequestParam(name = "foto", required = false) MultipartFile foto,
-			@RequestParam("nombre") String nombre, @RequestParam("raza") String raza, @RequestParam("edad") String edad)
-			throws Exception {
+			@RequestParam("nombre") String nombre, @RequestParam("raza") String raza, @RequestParam("edad") String edad,
+			@RequestParam("id_usu") Long id_usuario) throws Exception {
 		logger.info("call crear (" + nombre + "," + raza + "," + edad + "," + foto + ")");
 		Mascota mascota = new Mascota();
 		mascota.setNombre(nombre);
 		mascota.setRaza(raza);
 		mascota.setEdad(edad);
+		mascota.setId_usuario(id_usuario);
+
 		if (foto != null && !foto.isEmpty()) {
 			String filename = System.currentTimeMillis()
 					+ foto.getOriginalFilename().substring(foto.getOriginalFilename().lastIndexOf("."));
@@ -81,12 +82,21 @@ public class MascotaController {
 		mascotaservice.save(mascota);
 		return mascota;
 	}
+
 	@GetMapping("/mascotas/{id}")
 	public Mascota obtener(@PathVariable Long id) {
 		logger.info("call obtener: " + id);
-		
+
 		Mascota mascota = mascotaservice.findById(id);
-		
+
 		return mascota;
+	}
+	@DeleteMapping("/mascotas/{id}")
+	public ResponseEntity<String> eliminar(@PathVariable Long id) {
+		logger.info("call eliminar: " + id);
+		
+		mascotaservice.deleteById(id);
+		
+		return ResponseEntity.ok().body("Registro eliminado");
 	}
 }
